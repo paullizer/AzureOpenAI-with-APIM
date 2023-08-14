@@ -38,10 +38,12 @@ To use the command line deployment method, fork the library and use Codespaces o
 ##### Azure CLI
 
 - [How to install the Azure CLI | Microsoft Learn](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+- [Connect to Azure Government with Azure CLI - Azure Government | Microsoft Learn](https://learn.microsoft.com/en-us/azure/azure-government/documentation-government-get-started-connect-with-cli)
 
 ##### Azure PowerShell
 
 - [How to install Azure PowerShell | Microsoft Learn](https://learn.microsoft.com/en-us/powershell/azure/install-azure-powershell?view=azps-10.2.0)
+- [Connect to Azure Government with PowerShell - Azure Government | Microsoft Learn](https://learn.microsoft.com/en-us/azure/azure-government/documentation-government-get-started-connect-with-ps)
 
 ## Architectures
 
@@ -63,7 +65,7 @@ Description
 
 Simple one-button deployment, opens in Azure Portal
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-with-APIM%2Fmain%2Fpublic-apim.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-APIM%2Fmain%2Fpublic-apim.json%3Ftoken%3DGHSAT0AAAAAACFDVC7HSRDWVW4OHR27I7BYZG2M7FA)
 
 ##### Azure CLI
 
@@ -145,7 +147,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFil
 
 Description
 
-[insert image]
+![image-20230814161104494](./images/architecture-government_apim-to-aoai.png)
 
 #### Deploy
 
@@ -155,7 +157,7 @@ Description
 
 Simple one-button deployment, opens in Azure Portal
 
-[![Deploy to Azure Government](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-with-APIM%2Fmain%2Fpublic-apim.json)
+[![Deploy to Azure Government](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-APIM%2Fmain%2Fpublic-apim.json)
 
 ##### Azure CLI
 
@@ -165,6 +167,7 @@ $resourceGroupName = "RG-APIM-OpenAI"
 $location = "East US"
 $subscriptionName = "MySubscription"
 
+az cloud set --name AzureUSGovernment
 az login
 az account set --subscription $subscriptionName
 az group create --name $resourceGroupName --location $location
@@ -179,7 +182,7 @@ $resourceGroupName = "RG-APIM-OpenAI"
 $location = "East US"
 $subscriptionName = "MySubscription"
 
-Connect-AzAccount
+Connect-AzAccount -Environment AzureUSGovernment
 Set-AzContext -Subscription $subscriptionName
 New-AzResourceGroup -Name $resourceGroupName -Location $location
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\public-apim.json -Verbose -mode Incremental
