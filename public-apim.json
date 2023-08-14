@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.20.4.51522",
-      "templateHash": "7717402033823400079"
+      "templateHash": "13375471979642309848"
     }
   },
   "parameters": {
@@ -41,23 +41,11 @@
       "metadata": {
         "description": "Provide the URL of the Azure Open AI service."
       }
-    },
-    "openApiJson": {
-      "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/paullizer/AzureOpenAI-APIM-Public/main/AzureOpenAI_OpenAPI.json",
-      "metadata": {
-        "description": "DO NOT ALTER UNLESS, If you have a custom OpenAPI JSON for your Azure Open AI service."
-      }
-    },
-    "openApiXml": {
-      "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/paullizer/AzureOpenAI-APIM-Public/main/AzureOpenAI_Policy.xml",
-      "metadata": {
-        "description": "DO NOT ALTER UNLESS, If you have a custom OpenAPI XML for your Azure Open AI service."
-      }
     }
   },
   "variables": {
+    "openApiJson": "https://raw.githubusercontent.com/paullizer/AzureOpenAI-with-APIM/main/AzureOpenAI_OpenAPI.json",
+    "openApiXml": "https://raw.githubusercontent.com/paullizer/AzureOpenAI-with-APIM/main/AzureOpenAI_Policy.xml",
     "tenantId": "[subscription().tenantId]",
     "keyVaultskuName": "standard",
     "secretName": "aoai-api-key",
@@ -493,10 +481,10 @@
             "value": "[variables('apiPath')]"
           },
           "openApiJson": {
-            "value": "[parameters('openApiJson')]"
+            "value": "[variables('openApiJson')]"
           },
           "openApiXml": {
-            "value": "[parameters('openApiXml')]"
+            "value": "[variables('openApiXml')]"
           },
           "serviceUrl": {
             "value": "[parameters('apiServiceUrl')]"
