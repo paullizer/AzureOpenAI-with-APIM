@@ -72,7 +72,7 @@ module network 'modules/network.bicep' = {
   ]
 }
 
-module apiManagement 'modules/api-management.bicep' = {
+module apiManagement 'modules/api-management-private.bicep' = {
   name: 'api-management'
   params: {
     location: location

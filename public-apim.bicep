@@ -58,8 +58,6 @@ module apiManagement 'modules/api-management.bicep' = {
     publisherEmail: apiManagementPublisherEmail
     skuName: apiManagementSku
     skuCount: apiManagementSkuCount
-    virtualNetworkType: 'None'
-    subnetResourceId: ''
   }
 }
 

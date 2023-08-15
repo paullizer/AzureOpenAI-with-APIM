@@ -42,7 +42,6 @@ resource apiManagementServiceVnetIntegration 'Microsoft.ApiManagement/service@20
     }
     virtualNetworkType: virtualNetworkType
   }
-  
 }
 
 output apiManagementInternalIPAddress string = apiManagementServiceVnetIntegration.properties.publicIPAddresses[0]

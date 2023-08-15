@@ -20,10 +20,6 @@ param skuName string
 @description('The number of worker instances of your API Management service that should be provisioned.')
 param skuCount int
 
-param virtualNetworkType string
-
-param subnetResourceId string
-
 resource apiManagementServicePublic 'Microsoft.ApiManagement/service@2023-03-01-preview' =  {
   name: serviceName
   location: location
