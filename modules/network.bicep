@@ -7,11 +7,12 @@ param vnetIPPrefix string
 @description('The IP address prefix (CIDR range) to use when deploying the API Management subnet within the virtual network.')
 param apiManagementSubnetIPPrefix string
 
-var vnetName = 'VNet'
-var apiManagementSubnetName = 'apim'
-var nsgName = 'MyNSG'
+param vnetName string
 
-resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {
+var apiManagementSubnetName = 'apimSubnet'
+var nsgName = 'apimSubnetNsg'
+
+resource vnet 'Microsoft.Network/virtualNetworks@2023-04-01' = {
   name: vnetName
   location: location
   properties: {

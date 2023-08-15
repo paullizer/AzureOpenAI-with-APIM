@@ -20,7 +20,11 @@ param skuName string
 @description('The number of worker instances of your API Management service that should be provisioned.')
 param skuCount int
 
-resource apiManagementService 'Microsoft.ApiManagement/service@2023-03-01-preview' = {
+param virtualNetworkType string
+
+param subnetResourceId string
+
+resource apiManagementServicePublic 'Microsoft.ApiManagement/service@2023-03-01-preview' = if (virtualNetworkType == 'None') {
   name: serviceName
   location: location
   sku: {
@@ -36,7 +40,28 @@ resource apiManagementService 'Microsoft.ApiManagement/service@2023-03-01-previe
   }
 }
 
-output apiManagementInternalIPAddress string = apiManagementService.properties.publicIPAddresses[0]
-output apiManagementIdentityPrincipalId string = apiManagementService.identity.principalId
-output apiManagementProxyHostName string = apiManagementService.properties.hostnameConfigurations[0].hostName
-output apiManagementDeveloperPortalHostName string = replace(apiManagementService.properties.developerPortalUrl, 'https://', '')
+resource apiManagementServiceVnetIntegration 'Microsoft.ApiManagement/service@2023-03-01-preview' = if (virtualNetworkType == 'Internal' || virtualNetworkType == 'External') {
+  name: serviceName
+  location: location
+  sku: {
+    name: skuName
+    capacity: skuCount
+  }
+  identity: {
+    type: 'SystemAssigned'
+  }
+  properties: {
+    publisherName: publisherName
+    publisherEmail: publisherEmail
+    virtualNetworkConfiguration: {
+      subnetResourceId: subnetResourceId
+    }
+    virtualNetworkType: virtualNetworkType
+  }
+  
+}
+
+output apiManagementInternalIPAddress string = apiManagementServicePublic.properties.publicIPAddresses[0]
+output apiManagementIdentityPrincipalId string = apiManagementServicePublic.identity.principalId
+output apiManagementProxyHostName string = apiManagementServicePublic.properties.hostnameConfigurations[0].hostName
+output apiManagementDeveloperPortalHostName string = replace(apiManagementServicePublic.properties.developerPortalUrl, 'https://', '')

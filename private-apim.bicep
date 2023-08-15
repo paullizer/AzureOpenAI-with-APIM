@@ -25,6 +25,8 @@ var openApiXml = 'https://raw.githubusercontent.com/paullizer/AzureOpenAI-with-A
 
 var tenantId = subscription().tenantId
 
+var apiNetwork = 'Internal'
+
 var keyVaultskuName = 'standard'
 var secretName = 'aoai-api-key'
 var keysPermissions = ['list']
@@ -41,6 +43,8 @@ var apiName = 'azure-openai-service-api'
 var apiPath = ''
 var apiSubscriptionName = 'AzureOpenAI-Consumer-Example'
 
+var vnetName = 'vNet-${uniqueString(resourceGroup().id)}'
+// var privateEndpointName = 'pe-${uniqueString(resourceGroup().id)}'
 var apiManagementServiceName = 'apim-${uniqueString(resourceGroup().id)}'
 var keyVaultName = 'kv-${uniqueString(resourceGroup().id)}'
 var logAnalyticsName = 'law-${uniqueString(resourceGroup().id)}'
@@ -58,6 +62,7 @@ module logAnalyticsWorkspace 'modules/log-analytics-workspace.bicep' = {
 module network 'modules/network.bicep' = {
   name: 'network'
   params: {
+    vnetName: vnetName
     location: location
     vnetIPPrefix: vnetIPPrefix
     apiManagementSubnetIPPrefix: apiManagementSubnetIPPrefix
@@ -76,8 +81,8 @@ module apiManagement 'modules/api-management.bicep' = {
     publisherEmail: apiManagementPublisherEmail
     skuName: apiManagementSku
     skuCount: apiManagementSkuCount
-    // subnetResourceId: network.outputs.apiManagementSubnetResourceId
-    // virtualNetworkType: apiNetwork
+    subnetResourceId: network.outputs.apiManagementSubnetResourceId
+    virtualNetworkType: apiNetwork
   }
   dependsOn: [
     network
