@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.20.4.51522",
-      "templateHash": "15559051377455171778"
+      "templateHash": "13764883879853820009"
     }
   },
   "parameters": {
@@ -190,12 +190,6 @@
           },
           "skuCount": {
             "value": "[variables('apiManagementSkuCount')]"
-          },
-          "virtualNetworkType": {
-            "value": "None"
-          },
-          "subnetResourceId": {
-            "value": ""
           }
         },
         "template": {
@@ -205,7 +199,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.20.4.51522",
-              "templateHash": "16479254178547453628"
+              "templateHash": "10709026959963638243"
             }
           },
           "parameters": {
@@ -248,17 +242,10 @@
               "metadata": {
                 "description": "The number of worker instances of your API Management service that should be provisioned."
               }
-            },
-            "virtualNetworkType": {
-              "type": "string"
-            },
-            "subnetResourceId": {
-              "type": "string"
             }
           },
           "resources": [
             {
-              "condition": "[equals(parameters('virtualNetworkType'), 'None')]",
               "type": "Microsoft.ApiManagement/service",
               "apiVersion": "2023-03-01-preview",
               "name": "[parameters('serviceName')]",
@@ -273,28 +260,6 @@
               "properties": {
                 "publisherName": "[parameters('publisherName')]",
                 "publisherEmail": "[parameters('publisherEmail')]"
-              }
-            },
-            {
-              "condition": "[or(equals(parameters('virtualNetworkType'), 'Internal'), equals(parameters('virtualNetworkType'), 'External'))]",
-              "type": "Microsoft.ApiManagement/service",
-              "apiVersion": "2023-03-01-preview",
-              "name": "[parameters('serviceName')]",
-              "location": "[parameters('location')]",
-              "sku": {
-                "name": "[parameters('skuName')]",
-                "capacity": "[parameters('skuCount')]"
-              },
-              "identity": {
-                "type": "SystemAssigned"
-              },
-              "properties": {
-                "publisherName": "[parameters('publisherName')]",
-                "publisherEmail": "[parameters('publisherEmail')]",
-                "virtualNetworkConfiguration": {
-                  "subnetResourceId": "[parameters('subnetResourceId')]"
-                },
-                "virtualNetworkType": "[parameters('virtualNetworkType')]"
               }
             }
           ],

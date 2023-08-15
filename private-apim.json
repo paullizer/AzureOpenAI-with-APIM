@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.20.4.51522",
-      "templateHash": "925108325347479795"
+      "templateHash": "14710187782549030130"
     }
   },
   "parameters": {
@@ -562,7 +562,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.20.4.51522",
-              "templateHash": "16479254178547453628"
+              "templateHash": "5317994877091104090"
             }
           },
           "parameters": {
@@ -615,25 +615,6 @@
           },
           "resources": [
             {
-              "condition": "[equals(parameters('virtualNetworkType'), 'None')]",
-              "type": "Microsoft.ApiManagement/service",
-              "apiVersion": "2023-03-01-preview",
-              "name": "[parameters('serviceName')]",
-              "location": "[parameters('location')]",
-              "sku": {
-                "name": "[parameters('skuName')]",
-                "capacity": "[parameters('skuCount')]"
-              },
-              "identity": {
-                "type": "SystemAssigned"
-              },
-              "properties": {
-                "publisherName": "[parameters('publisherName')]",
-                "publisherEmail": "[parameters('publisherEmail')]"
-              }
-            },
-            {
-              "condition": "[or(equals(parameters('virtualNetworkType'), 'Internal'), equals(parameters('virtualNetworkType'), 'External'))]",
               "type": "Microsoft.ApiManagement/service",
               "apiVersion": "2023-03-01-preview",
               "name": "[parameters('serviceName')]",
