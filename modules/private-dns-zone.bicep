@@ -8,7 +8,6 @@ resource parentAPIM 'Microsoft.ApiManagement/service@2023-03-01-preview' existin
 resource privateDnsZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
   name: privateDnsZoneName
   location: 'global'
-  etag: 'string'
   properties: {}
 }
 
