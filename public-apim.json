@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.20.4.51522",
-      "templateHash": "13375471979642309848"
+      "templateHash": "13764883879853820009"
     }
   },
   "parameters": {
@@ -38,6 +38,7 @@
     },
     "apiServiceUrl": {
       "type": "string",
+      "defaultValue": "https://InsertYourAzureOpenAiNameHere.openai.azure.com/openai",
       "metadata": {
         "description": "Provide the URL of the Azure Open AI service."
       }
@@ -63,6 +64,7 @@
     "apiManagementNamedValueName": "aoai-api-key",
     "apiName": "azure-openai-service-api",
     "apiPath": "",
+    "apiSubscriptionName": "AzureOpenAI-Consumer-Example",
     "apiManagementServiceName": "[format('apim-{0}', uniqueString(resourceGroup().id))]",
     "keyVaultName": "[format('kv-{0}', uniqueString(resourceGroup().id))]",
     "logAnalyticsName": "[format('law-{0}', uniqueString(resourceGroup().id))]",
@@ -488,6 +490,9 @@
           },
           "serviceUrl": {
             "value": "[parameters('apiServiceUrl')]"
+          },
+          "apiSubscriptionName": {
+            "value": "[variables('apiSubscriptionName')]"
           }
         },
         "template": {
@@ -497,7 +502,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.20.4.51522",
-              "templateHash": "16385408937536666314"
+              "templateHash": "937226898632570735"
             }
           },
           "parameters": {
@@ -517,6 +522,9 @@
               "type": "string"
             },
             "serviceUrl": {
+              "type": "string"
+            },
+            "apiSubscriptionName": {
               "type": "string"
             }
           },
@@ -539,6 +547,21 @@
               "properties": {
                 "format": "xml-link",
                 "value": "[parameters('openApiXml')]"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimName'), parameters('apiName'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.ApiManagement/service/subscriptions",
+              "apiVersion": "2023-03-01-preview",
+              "name": "[format('{0}/{1}', parameters('apimName'), parameters('apiSubscriptionName'))]",
+              "properties": {
+                "allowTracing": false,
+                "displayName": "[parameters('apiSubscriptionName')]",
+                "ownerId": "/users/1",
+                "scope": "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimName'), parameters('apiName'))]",
+                "state": "active"
               },
               "dependsOn": [
                 "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimName'), parameters('apiName'))]"

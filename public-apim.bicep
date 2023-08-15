@@ -12,7 +12,7 @@ param apiManagementPublisherEmail string = 'admin@contoso.com'
 param openaiKey string
 
 @description('Provide the URL of the Azure Open AI service.')
-param apiServiceUrl string
+param apiServiceUrl string = 'https://InsertYourAzureOpenAiNameHere.openai.azure.com/openai'
 
 var openApiJson = 'https://raw.githubusercontent.com/paullizer/AzureOpenAI-with-APIM/main/AzureOpenAI_OpenAPI.json'
 var openApiXml = 'https://raw.githubusercontent.com/paullizer/AzureOpenAI-with-APIM/main/AzureOpenAI_Policy.xml'
@@ -33,6 +33,7 @@ var apiManagementNamedValueName = 'aoai-api-key'
 
 var apiName = 'azure-openai-service-api'
 var apiPath = ''
+var apiSubscriptionName = 'AzureOpenAI-Consumer-Example'
 
 var apiManagementServiceName = 'apim-${uniqueString(resourceGroup().id)}'
 var keyVaultName = 'kv-${uniqueString(resourceGroup().id)}'
@@ -107,6 +108,7 @@ module api 'modules/api.bicep' = {
     openApiJson : openApiJson
     openApiXml : openApiXml
     serviceUrl: apiServiceUrl
+    apiSubscriptionName: apiSubscriptionName
   }
   dependsOn: [
     keyVault

@@ -39,6 +39,7 @@ var apiManagementNamedValueName = 'aoai-api-key'
 
 var apiName = 'azure-openai-service-api'
 var apiPath = ''
+var apiSubscriptionName = 'AzureOpenAI-Consumer-Example'
 
 var apiManagementServiceName = 'apim-${uniqueString(resourceGroup().id)}'
 var keyVaultName = 'kv-${uniqueString(resourceGroup().id)}'
@@ -130,6 +131,7 @@ module api 'modules/api.bicep' = {
     openApiJson : openApiJson
     openApiXml : openApiXml
     serviceUrl: apiServiceUrl
+    apiSubscriptionName: apiSubscriptionName
   }
   dependsOn: [
     keyVault
