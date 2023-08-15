@@ -24,7 +24,7 @@ param virtualNetworkType string
 
 param subnetResourceId string
 
-resource apiManagementServicePublic 'Microsoft.ApiManagement/service@2023-03-01-preview' =  {
+resource apiManagementServiceVnetIntegration 'Microsoft.ApiManagement/service@2023-03-01-preview' = {
   name: serviceName
   location: location
   sku: {
@@ -37,11 +37,16 @@ resource apiManagementServicePublic 'Microsoft.ApiManagement/service@2023-03-01-
   properties: {
     publisherName: publisherName
     publisherEmail: publisherEmail
+    virtualNetworkConfiguration: {
+      subnetResourceId: subnetResourceId
+    }
+    virtualNetworkType: virtualNetworkType
   }
+  
 }
 
-output apiManagementInternalIPAddress string = apiManagementServicePublic.properties.publicIPAddresses[0]
-output apiManagementIdentityPrincipalId string = apiManagementServicePublic.identity.principalId
-output apiManagementProxyHostName string = apiManagementServicePublic.properties.hostnameConfigurations[0].hostName
-output apiManagementDeveloperPortalHostName string = replace(apiManagementServicePublic.properties.developerPortalUrl, 'https://', '')
+output apiManagementInternalIPAddress string = apiManagementServiceVnetIntegration.properties.publicIPAddresses[0]
+output apiManagementIdentityPrincipalId string = apiManagementServiceVnetIntegration.identity.principalId
+output apiManagementProxyHostName string = apiManagementServiceVnetIntegration.properties.hostnameConfigurations[0].hostName
+output apiManagementDeveloperPortalHostName string = replace(apiManagementServiceVnetIntegration.properties.developerPortalUrl, 'https://', '')
 
