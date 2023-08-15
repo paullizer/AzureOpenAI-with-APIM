@@ -49,6 +49,7 @@ var apiManagementServiceName = 'apim-${uniqueString(resourceGroup().id)}'
 var keyVaultName = 'kv-${uniqueString(resourceGroup().id)}'
 var logAnalyticsName = 'law-${uniqueString(resourceGroup().id)}'
 var applicationInsightsName = 'appIn-${uniqueString(resourceGroup().id)}'
+var privateDnsZoneName = 'azure-api.net'
 
 module logAnalyticsWorkspace 'modules/log-analytics-workspace.bicep' = {
   name: 'log-analytics-workspace'
@@ -141,6 +142,17 @@ module api 'modules/api.bicep' = {
   dependsOn: [
     keyVault
     apiManagementService
+  ]
+}
+
+module privateDnsZone 'modules/private-dns-zone.bicep' = {
+  name: 'private-dns-zone'
+  params: {
+    privateDnsZoneName: privateDnsZoneName
+    apimName: apiManagementServiceName
+  }
+  dependsOn: [
+    apiManagement
   ]
 }
 
