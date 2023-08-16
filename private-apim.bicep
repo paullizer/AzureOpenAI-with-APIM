@@ -150,6 +150,7 @@ module privateDnsZone 'modules/private-dns-zone.bicep' = {
   params: {
     privateDnsZoneName: privateDnsZoneName
     apimName: apiManagementServiceName
+    vnetName: vnetName
   }
   dependsOn: [
     apiManagement

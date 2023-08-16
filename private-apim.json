@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.20.4.51522",
-      "templateHash": "15582195489742377338"
+      "templateHash": "12779710611274232309"
     }
   },
   "parameters": {
@@ -966,6 +966,9 @@
           },
           "apimName": {
             "value": "[variables('apiManagementServiceName')]"
+          },
+          "vnetName": {
+            "value": "[variables('vnetName')]"
           }
         },
         "template": {
@@ -975,7 +978,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.20.4.51522",
-              "templateHash": "13851815458660712430"
+              "templateHash": "11567085132751591472"
             }
           },
           "parameters": {
@@ -983,6 +986,9 @@
               "type": "string"
             },
             "apimName": {
+              "type": "string"
+            },
+            "vnetName": {
               "type": "string"
             }
           },
@@ -1102,7 +1108,7 @@
               "properties": {
                 "registrationEnabled": false,
                 "virtualNetwork": {
-                  "id": "[reference(resourceId('Microsoft.ApiManagement/service', parameters('apimName')), '2023-03-01-preview').virtualNetworkConfiguration.vnetid]"
+                  "id": "[resourceId('Microsoft.Network/VirtualNetworks', parameters('vnetName'))]"
                 }
               },
               "dependsOn": [
