@@ -20,6 +20,9 @@ param azureOpenAiKey string
 @description('Provide the URL of the Azure Open AI service.')
 param apiServiceUrl string = 'https://InsertYourAzureOpenAiNameHere.openai.azure.com/openai'
 
+@description('Provide the Public IP address of the Azure Open AI service.')
+param azureOpenAiPublicIpAddress string = '000.000.000.000'
+
 var openApiJson = 'https://raw.githubusercontent.com/paullizer/AzureOpenAI-with-APIM/main/AzureOpenAI_OpenAPI.json'
 var openApiXml = 'https://raw.githubusercontent.com/paullizer/AzureOpenAI-with-APIM/main/AzureOpenAI_Policy.xml'
 
@@ -49,7 +52,10 @@ var apiManagementServiceName = 'apim-${uniqueString(resourceGroup().id)}'
 var keyVaultName = 'kv-${uniqueString(resourceGroup().id)}'
 var logAnalyticsName = 'law-${uniqueString(resourceGroup().id)}'
 var applicationInsightsName = 'appIn-${uniqueString(resourceGroup().id)}'
-var privateDnsZoneName = 'azure-api.net'
+var routeTableName = 'rt-${uniqueString(resourceGroup().id)}'
+
+var privateDnsZoneNameApim = 'azure-api.net'
+var privateDnsZoneNameAzureOpenAi = 'openai.azure.com'
 
 module logAnalyticsWorkspace 'modules/log-analytics-workspace.bicep' = {
   name: 'log-analytics-workspace'
@@ -145,16 +151,39 @@ module api 'modules/api.bicep' = {
   ]
 }
 
-module privateDnsZone 'modules/private-dns-zone-apim.bicep' = {
-  name: 'private-dns-zone'
+module privateDnsZoneApim 'modules/private-dns-zone-apim.bicep' = {
+  name: 'private-dns-zone-apim'
   params: {
-    privateDnsZoneName: privateDnsZoneName
+    privateDnsZoneName: privateDnsZoneNameApim
     apimName: apiManagementServiceName
     vnetName: vnetName
   }
   dependsOn: [
     apiManagement
   ]
+}
+
+module privateDnsZoneAzureOpenAi 'modules/private-dns-zone-aoai.bicep' = {
+  name: 'private-dns-zone-aoai'
+  params: {
+    privateDnsZoneName: privateDnsZoneNameAzureOpenAi
+    apiServiceUrl: apiServiceUrl
+    azureOpenAiPublicIpAddress: azureOpenAiPublicIpAddress
+    vnetName: vnetName
+  }
+  dependsOn: [
+    privateDnsZoneApim
+  ]
+}
+
+module routeTable 'modules/route-table.bicep' = {
+  name: 'route-table'
+  params: {
+    routeTableName: routeTableName
+    location: location
+    azureOpenAiPublicIpAddress: azureOpenAiPublicIpAddress
+  }
+
 }
 
 

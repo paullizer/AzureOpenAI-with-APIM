@@ -9,7 +9,7 @@ param apiManagementPublisherEmail string = 'admin@contoso.com'
 
 @description('Provide Key 1 for the Azure Open AI service.')
 @secure()
-param openaiKey string
+param azureOpenAiKey string
 
 @description('Provide the URL of the Azure Open AI service.')
 param apiServiceUrl string = 'https://InsertYourAzureOpenAiNameHere.openai.azure.com/openai'
@@ -75,7 +75,7 @@ module keyVault 'modules/key-vault.bicep' = {
     secretsPermissions: secretsPermissions
     skuName: keyVaultskuName
     secretName: secretName
-    secretValue: openaiKey
+    secretValue: azureOpenAiKey
   }
   dependsOn: [
     apiManagement
@@ -93,7 +93,7 @@ resource apiManagementService 'Microsoft.ApiManagement/service@2021-08-01' exist
     ]
     properties: {
       displayName: apiManagementNamedValueName
-      value: openaiKey
+      value: azureOpenAiKey
       secret: true
     }
   }
