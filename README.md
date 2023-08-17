@@ -22,8 +22,12 @@ Purpose and summary
 - Contributor permissions to subscription or existing resource group
 - Resource Group (or ability to create)
 - Azure Open AI service deployed
+  - Solution Accelerator: Deploy Azure Open AI with Front Door, secured with Web App Firewall 
+    - This is a link to another repo to deploy AOAI + Front Door, Repo is TBD.
+
 - Azure Open AI service URL
 - Azure Open AI key
+- [Azure Government Only] Azure Open AI service public IP
 
 #### One-Button
 

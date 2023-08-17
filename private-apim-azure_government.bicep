@@ -54,7 +54,7 @@ var logAnalyticsName = 'law-${uniqueString(resourceGroup().id)}'
 var applicationInsightsName = 'appIn-${uniqueString(resourceGroup().id)}'
 var routeTableName = 'rt-${uniqueString(resourceGroup().id)}'
 
-var privateDnsZoneNameApim = 'azure-api.net'
+var privateDnsZoneNameApim = 'azure-api.us'
 var privateDnsZoneNameAzureOpenAi = 'openai.azure.com'
 
 module logAnalyticsWorkspace 'modules/log-analytics-workspace.bicep' = {

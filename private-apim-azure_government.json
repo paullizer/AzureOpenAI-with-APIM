@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.20.4.51522",
-      "templateHash": "4969381964951665860"
+      "templateHash": "735207236615971573"
     }
   },
   "parameters": {
@@ -93,7 +93,7 @@
     "logAnalyticsName": "[format('law-{0}', uniqueString(resourceGroup().id))]",
     "applicationInsightsName": "[format('appIn-{0}', uniqueString(resourceGroup().id))]",
     "routeTableName": "[format('rt-{0}', uniqueString(resourceGroup().id))]",
-    "privateDnsZoneNameApim": "azure-api.net",
+    "privateDnsZoneNameApim": "azure-api.us",
     "privateDnsZoneNameAzureOpenAi": "openai.azure.com"
   },
   "resources": [
