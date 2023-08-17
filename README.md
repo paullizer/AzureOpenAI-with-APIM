@@ -55,7 +55,7 @@ Summary
 
 Description
 
-![image-20230817113004268](C:\Users\paullizer\AppData\Roaming\Typora\typora-user-images\image-20230817113004268.png)
+![Azure Commercial API Management to Azure Open AI](./images/architecture-commercial_apim-to-aoai.png)
 
 #### Deploy
 
@@ -101,7 +101,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFil
 
 Description
 
-![image-20230817113022498](C:\Users\paullizer\AppData\Roaming\Typora\typora-user-images\image-20230817113022498.png)
+![Azure Commercial API Management to Azure Open AI with private endpoints](./images/architecture-private-commercial_apim-to-aoai.png)
 
 #### Deploy
 
@@ -147,7 +147,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFil
 
 Description
 
-![image-20230817113212792](C:\Users\paullizer\AppData\Roaming\Typora\typora-user-images\image-20230817113212792.png)
+![Azure Government API Management to Azure Open AI](./images/architecture-government_apim-to-aoai.png)
 
 #### Deploy
 
@@ -194,7 +194,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFil
 
 Description
 
-![image-20230817113246746](C:\Users\paullizer\AppData\Roaming\Typora\typora-user-images\image-20230817113246746.png)
+![Azure Government API Management to Azure Open AI with private endpoints](./images/architecture-private-government_apim-to-aoai.png)
 
 #### Deploy
 
