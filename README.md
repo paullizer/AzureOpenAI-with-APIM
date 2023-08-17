@@ -168,7 +168,7 @@ Simple one-button deployment, opens in Azure Portal
 ```powershell
 # Update the following variables to use the appropriate resource group and subscription.
 $resourceGroupName = "RG-APIM-OpenAI"
-$location = "East US"
+$location = "usgovvirginia"
 $subscriptionName = "MySubscription"
 
 az cloud set --name AzureUSGovernment
@@ -215,7 +215,7 @@ Simple one-button deployment, opens in Azure Portal
 ```powershell
 # Update the following variables to use the appropriate resource group and subscription.
 $resourceGroupName = "RG-APIM-OpenAI"
-$location = "East US"
+$location = "usgovvirginia"
 $subscriptionName = "MySubscription"
 
 az cloud set --name AzureUSGovernment
