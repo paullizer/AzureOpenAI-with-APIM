@@ -55,7 +55,7 @@ Summary
 
 Description
 
-![image-20230814083658842](./images/architecture-commercial_apim-to-aoai.png)
+![image-20230817113004268](C:\Users\paullizer\AppData\Roaming\Typora\typora-user-images\image-20230817113004268.png)
 
 #### Deploy
 
@@ -65,7 +65,7 @@ Description
 
 Simple one-button deployment, opens in Azure Portal
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-APIM%2Fmain%2Fpublic-apim.json%3Ftoken%3DGHSAT0AAAAAACFDVC7HSRDWVW4OHR27I7BYZG2M7FA)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-with-APIM%2Fmain%2Fpublic-apim.json)
 
 ##### Azure CLI
 
@@ -92,7 +92,7 @@ $subscriptionName = "MySubscription"
 Connect-AzAccount
 Set-AzContext -Subscription $subscriptionName
 New-AzResourceGroup -Name $resourceGroupName -Location $location
-New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\public-apim.json -Verbose -mode Incremental
+New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\public-apim.bicep -Verbose -mode Incremental
 ```
 
 
@@ -101,7 +101,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFil
 
 Description
 
-[insert image]
+![image-20230817113022498](C:\Users\paullizer\AppData\Roaming\Typora\typora-user-images\image-20230817113022498.png)
 
 #### Deploy
 
@@ -111,7 +111,7 @@ Description
 
 Simple one-button deployment, opens in Azure Portal
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-APIM%2Fmain%2Fmain.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-with-APIM%2Fmain%2Fprivate-apim.json)
 
 ##### Azure CLI
 
@@ -124,7 +124,7 @@ $subscriptionName = "MySubscription"
 az login
 az account set --subscription $subscriptionName
 az group create --name $resourceGroupName --location $location
-az deployment group create --resource-group $resourceGroupName  --template-file .\public-apim.bicep --mode Incremental
+az deployment group create --resource-group $resourceGroupName  --template-file .\private-apim.bicep --mode Incremental
 ```
 
 ##### Azure PowerShell
@@ -138,7 +138,7 @@ $subscriptionName = "MySubscription"
 Connect-AzAccount
 Set-AzContext -Subscription $subscriptionName
 New-AzResourceGroup -Name $resourceGroupName -Location $location
-New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\public-apim.json -Verbose -mode Incremental
+New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\private-apim.bicep -Verbose -mode Incremental
 ```
 
 ### 
@@ -147,7 +147,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFil
 
 Description
 
-![image-20230814161104494](./images/architecture-government_apim-to-aoai.png)
+![image-20230817113212792](C:\Users\paullizer\AppData\Roaming\Typora\typora-user-images\image-20230817113212792.png)
 
 #### Deploy
 
@@ -157,7 +157,7 @@ Description
 
 Simple one-button deployment, opens in Azure Portal
 
-[![Deploy to Azure Government](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-APIM%2Fmain%2Fpublic-apim.json)
+[![Deploy to Azure Government](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-with-APIM%2Fmain%2Fpublic-apim.json)
 
 ##### Azure CLI
 
@@ -185,7 +185,7 @@ $subscriptionName = "MySubscription"
 Connect-AzAccount -Environment AzureUSGovernment
 Set-AzContext -Subscription $subscriptionName
 New-AzResourceGroup -Name $resourceGroupName -Location $location
-New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\public-apim.json -Verbose -mode Incremental
+New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\public-apim.bicep -Verbose -mode Incremental
 ```
 
 
@@ -194,7 +194,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFil
 
 Description
 
-[insert image]
+![image-20230817113246746](C:\Users\paullizer\AppData\Roaming\Typora\typora-user-images\image-20230817113246746.png)
 
 #### Deploy
 
@@ -204,7 +204,7 @@ Description
 
 Simple one-button deployment, opens in Azure Portal
 
-[![Deploy to Azure Government](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-APIM%2Fmain%2Fmain.json)
+[![Deploy to Azure Government](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-with-APIM%2Fmain%2Fprivate-apim-azure_government.json)
 
 ##### Azure CLI
 
@@ -214,10 +214,11 @@ $resourceGroupName = "RG-APIM-OpenAI"
 $location = "East US"
 $subscriptionName = "MySubscription"
 
+az cloud set --name AzureUSGovernment
 az login
 az account set --subscription $subscriptionName
 az group create --name $resourceGroupName --location $location
-az deployment group create --resource-group $resourceGroupName  --template-file .\public-apim.bicep --mode Incremental
+az deployment group create --resource-group $resourceGroupName  --template-file .\private-apim-azure_government.bicep --mode Incremental
 ```
 
 ##### Azure PowerShell
@@ -228,10 +229,10 @@ $resourceGroupName = "RG-APIM-OpenAI"
 $location = "East US"
 $subscriptionName = "MySubscription"
 
-Connect-AzAccount
+Connect-AzAccount -Environment AzureUSGovernment
 Set-AzContext -Subscription $subscriptionName
 New-AzResourceGroup -Name $resourceGroupName -Location $location
-New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\public-apim.json -Verbose -mode Incremental
+New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\private-apim-azure_government.bicep -Verbose -mode Incremental
 ```
 
 ## Tying it All together
