@@ -22,10 +22,17 @@ Purpose and summary
 - Contributor permissions to subscription or existing resource group
 - Resource Group (or ability to create)
 - Azure Open AI service deployed
-  - Solution Accelerator: [Deploy Azure Open AI with Front Door, secured with Web App Firewall](https://github.com/paullizer/AzureOpenAI-with-FrontDoor-WAF) 
+  - [How-to: Create and deploy an Azure OpenAI Service resource - Azure OpenAI | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
+
+- Azure Open AI model deployed
+  - [How-to: Create and deploy an Azure OpenAI Service resource - Azure OpenAI | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal#deploy-a-model)
 
 - Azure Open AI service URL
+  - [Quickstart - Deploy a model and generate text using Azure OpenAI Service - Azure OpenAI | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/openai/quickstart?tabs=command-line&pivots=rest-api#retrieve-key-and-endpoint)
+
 - Azure Open AI key
+  - [Quickstart - Deploy a model and generate text using Azure OpenAI Service - Azure OpenAI | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/openai/quickstart?tabs=command-line&pivots=rest-api#retrieve-key-and-endpoint)
+
 - [Azure Government Only] Azure Open AI service public IP
 
 #### One-Button
@@ -245,11 +252,21 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFil
 
 Now you have your APIM deployed and in front of your Azure Open AI API, the following examples will show you how to query and interact.
 
+### Get your Azure Open AI Model Name
+
+You will need to select a model
+
 ### Get your APIM Subscription Key
 
 You can use this key for testing or as an example on how to create subscriptions to provide access to you Azure Open AI service. Instead of sharing your Azure Open AI Key, you create subscriptions in APIM and share this key, then you can analyze and monitor usage, provide guardrails for usage, and manage access.
 
-[INSERT STEPS HERE]
+![Get your APIM Subscription Key](./images/get-your-apim-sub-key.png)
+
+1. Navigate to your new APIM
+2. Select **Subscriptions** from the menu
+3. Select **...**
+4. Select **Show/Hide keys**
+5. Select **copy icon**
 
 ### Get your APIM Azure Open AI URL
 
@@ -270,12 +287,12 @@ Modify by including your values, then copy and paste all of it into PowerShell 7
 ```powershell
 # Update these values to match your environment
 $apimUrl = 'THE_HTTPS_URL_OF_YOUR_APIM_INSTANCE'
-$model = 'GPT-3_5-Turbo' # Probaby what you named your model, but change if necessary
+$modelName = 'GPT-3_5-Turbo' # Probaby what you named your model, but change if necessary
 $apiVersion = '2023-03-15-preview' # Do not change this value, unless you are testing a different API version
 $subscriptionKey = 'YOUR_SUBSCRIPTION_KEY'
 
 # Do not touch these values
-$url = $apimUrl + "/deployments/" + $model + "/chat/completions?api-version=" + $apiVersion
+$url = $apimUrl + "/deployments/" + $modelName + "/chat/completions?api-version=" + $apiVersion
 $key = "Ocp-Apim-Subscription-Key: " + $subscriptionKey
 
 
@@ -298,11 +315,11 @@ curl $url -k -H "Content-Type: application/json" -H $key -d '{
 ```bash
 #!/bin/bash
 apimUrl="THE_HTTPS_URL_OF_YOUR_APIM_INSTANCE"
-model="GPT-3_5-Turbo" # Probaby what you named your model, but change if necessary
+modelName="GPT-3_5-Turbo" # Probaby what you named your model, but change if necessary
 apiVersion="2023-03-15-preview" # Do not change this value, unless you are testing a different API version
 subscriptionKey="YOUR_SUBSCRIPTION_KEY"
 
-url="${apimUrl}"/deployments/"${model}"/chat/completions?api-version="${apiVersion}"
+url="${apimUrl}"/deployments/"${modelName}"/chat/completions?api-version="${apiVersion}"
 key="Ocp-Apim-Subscription-Key: ${subscriptionKey}"
 
 curl $url -k -H "Content-Type: application/json" -H $key -d '{
@@ -330,8 +347,8 @@ using Azure;
 using Azure.AI.OpenAI;
 
 OpenAIClient client = new OpenAIClient(
-	new Uri("https://INSERTAPIMURLHERE/deployments/GPT-3_5-Turbo/chat/completions?api-version=2023-03-15-preview"),
-	new AzureKeyCredential("INSERTKEYHERE"));
+	new Uri("https://INSERT_APIM_URL_HERE/deployments/INSERT_MODELNAME_HERE/chat/completions?api-version=INSERT_API_VERSION_HERE"),
+	new AzureKeyCredential("INSERT_SUBSCRIPTION_KEY_HERE"));
 
 // ### If streaming is not selected
 Response<ChatCompletions> responseWithoutStream = await client.GetChatCompletionsAsync(
@@ -356,3 +373,10 @@ ChatChoice choice = completions.Choices[0];
 Console.WriteLine(choice.Message.Content);
 ```
 
+### Get Public IP Address of my Azure Open AI service
+
+Ping or nslookup the fqdn of your Azure Open AI url
+
+- example: url is https://example.openai.azure.com, fqdn is example.openai.azure.com
+
+![Get Public IP Address of my Azure Open AI service](./images/get-public-address-of-aoai.png)
