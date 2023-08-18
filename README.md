@@ -19,7 +19,7 @@ Purpose and summary
 
 #### Azure 
 
-- Contributor permissions to subscription or existing resource group
+- Contributor permissions to subscription or resource group
 - Resource Group (or ability to create)
 - Azure Open AI service deployed
   - [How-to: Create and deploy an Azure OpenAI Service resource - Azure OpenAI | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
@@ -33,7 +33,10 @@ Purpose and summary
 - Azure Open AI key
   - [Quickstart - Deploy a model and generate text using Azure OpenAI Service - Azure OpenAI | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/openai/quickstart?tabs=command-line&pivots=rest-api#retrieve-key-and-endpoint)
 
-- [Azure Government Only] Azure Open AI service public IP
+- Azure Open AI service public IP
+  - ***Azure Government w/ Private Endpoint Deploy Solution Only*** 
+  - [How-to: Get the public IP address of Azure Open AI service](#get-public-ip-address-of-my-azure-open-ai-service)
+
 
 #### One-Button
 
