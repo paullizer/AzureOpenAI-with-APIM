@@ -99,7 +99,10 @@ New-AzResourceGroup -Name $resourceGroupName -Location $location
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\public-apim.bicep -Verbose -mode Incremental
 ```
 
+#### Tying it all together
 
+- Now that APIM is deployed and automatically configured to work with your Azure Open AI service
+  - [Click here to learn how do you use the APIM endpoint to interact with Azure Open AI?](#tying-it-all-together)
 
 ### Azure Commercial API Management to Azure Open AI with private endpoints
 
