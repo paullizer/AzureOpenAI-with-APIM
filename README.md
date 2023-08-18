@@ -1,8 +1,8 @@
-# AzureOpenAI-APIM
+# Manage Azure Open AI using APIM
 
 ## Overview
 
-Purpose and summary
+Describe.
 
 ### Solutions
 
@@ -261,6 +261,8 @@ You will need to select a model
 
 ### Get your APIM Subscription Key
 
+The subscription key for APIM is collected at the Subscription section of the APIM resource, regardless if you are in Azure Commercial or Government.
+
 You can use this key for testing or as an example on how to create subscriptions to provide access to you Azure Open AI service. Instead of sharing your Azure Open AI Key, you create subscriptions in APIM and share this key, then you can analyze and monitor usage, provide guardrails for usage, and manage access.
 
 ![Get your APIM Subscription Key](./images/get-your-apim-sub-key.png)
@@ -273,11 +275,13 @@ You can use this key for testing or as an example on how to create subscriptions
 
 ### Get your APIM Azure Open AI URL
 
-Description
+The URL for APIM is collected at the Overview section of the APIM resource, regardless if you are in Azure Commercial or Government.
 
-[INSERT STEPS HERE]
+![Get your APIM Azure Open AI URL](./images/get-your-apim-url.png)
 
 ### Query Examples
+
+Using your Azure Open AI model, API version, APIM URL, and APIM subscription key you can now execute Azure Open AI queries against your APIM URL instead of your Azure Open AI URL. This means you can create new subscription keys for anyone or any team who needs access to Azure Open AI instead of deploying new Azure Open AI services.
 
 #### curl
 
