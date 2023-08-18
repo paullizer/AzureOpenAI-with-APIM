@@ -384,6 +384,10 @@ Console.WriteLine(choice.Message.Content);
 
 Ping or nslookup the fqdn of your Azure Open AI url
 
-- example: url is https://example.openai.azure.com, fqdn is example.openai.azure.com
+- example: 
+  - url is https://aoai.openai.azure.com
+  - fqdn is aoai.openai.azure.com
+
+Then use nslookup in PowerShell along with the fqdn to find out the public IP address of your Azure Open AI service
 
 ![Get Public IP Address of my Azure Open AI service](./images/get-public-address-of-aoai.png)
