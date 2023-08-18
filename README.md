@@ -2,9 +2,11 @@
 
 ## Overview
 
-Describe.
+Using Azure's APIM orchestration provides a organizations with a powerful way to scale and manage their Azure Open AI service without deploying Azure Open AI endpoints everywhere. Administrators can issue subscription keys via APIM for accessing a single Azure Open AI service instead of having teams share Azure Open AI keys. APIM delivers usage metrics along with API monitoring to improve business intelligence. APIM policies control access, throttling, and a mechanism for chargeback cost models.
 
 ### Solutions
+
+There are four solutions developed to meet the needs of the organization from a sandbox to model a production environment. 
 
 - [Azure Commercial API Management to Azure Open AI](#azure-commercial-api-management-to-azure-open-ai)
 - [Azure Commercial API Management to Azure Open AI with private endpoints](#azure-commercial-api-management-to-azure-open-ai-with-private-endpoints)
@@ -12,6 +14,8 @@ Describe.
 - [Azure Government API Management to Azure Open AI with private endpoints](#azure-government-api-management-to-azure-open-ai-with-private-endpoints)
 
 ### Using it
+
+Once the service is deployed, use the following section to understand how to access your Azure Open AI service via APIM.
 
 - [Steps and examples on how to use your APIM-based API to query your Azure Open AI API](#tying-it-all-together)
 
