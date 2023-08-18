@@ -22,8 +22,7 @@ Purpose and summary
 - Contributor permissions to subscription or existing resource group
 - Resource Group (or ability to create)
 - Azure Open AI service deployed
-  - Solution Accelerator: Deploy Azure Open AI with Front Door, secured with Web App Firewall 
-    - This is a link to another repo to deploy AOAI + Front Door, Repo is TBD.
+  - Solution Accelerator: [Deploy Azure Open AI with Front Door, secured with Web App Firewall](https://github.com/paullizer/AzureOpenAI-with-FrontDoor-WAF) 
 
 - Azure Open AI service URL
 - Azure Open AI key
@@ -262,8 +261,25 @@ Description
 
 #### curl
 
-```bash
-curl https://INSERTAPIMURLHERE/deployments/GPT-3_5-Turbo/chat/completions?api-version=2023-03-15-preview -k -H "Content-Type: application/json" -H "Ocp-Apim-Subscription-Key: INSERTKEYHERE" -d '{
+##### Windows PowerShell 7
+
+Copy and paste this script into a text editor or Visual Studio code.
+
+Modify by including your values, then copy and paste all of it into PowerShell 7 terminal.
+
+```powershell
+# Update these values to match your environment
+$apimUrl = 'THE_HTTPS_URL_OF_YOUR_APIM_INSTANCE'
+$model = 'GPT-3_5-Turbo' # Probaby what you named your model, but change if necessary
+$apiVersion = '2023-03-15-preview' # Do not change this value, unless you are testing a different API version
+$subscriptionKey = 'YOUR_SUBSCRIPTION_KEY'
+
+# Do not touch these values
+$url = $apimUrl + "/deployments/" + $model + "/chat/completions?api-version=" + $apiVersion
+$key = "Ocp-Apim-Subscription-Key: " + $subscriptionKey
+
+
+curl $url -k -H "Content-Type: application/json" -H $key -d '{
     "messages": [
         {
             "role": "system",
@@ -276,6 +292,34 @@ curl https://INSERTAPIMURLHERE/deployments/GPT-3_5-Turbo/chat/completions?api-ve
     ]
 }'
 ```
+
+##### Linux
+
+```bash
+#!/bin/bash
+apimUrl="THE_HTTPS_URL_OF_YOUR_APIM_INSTANCE"
+model="GPT-3_5-Turbo" # Probaby what you named your model, but change if necessary
+apiVersion="2023-03-15-preview" # Do not change this value, unless you are testing a different API version
+subscriptionKey="YOUR_SUBSCRIPTION_KEY"
+
+url="${apimUrl}"/deployments/"${model}"/chat/completions?api-version="${apiVersion}"
+key="Ocp-Apim-Subscription-Key: ${subscriptionKey}"
+
+curl $url -k -H "Content-Type: application/json" -H $key -d '{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are an AI assistant that helps people find information."
+        },
+        {
+            "role": "user",
+            "content": "What are the differences between Azure Machine Learning and Azure AI services?"
+        }
+    ]
+}'
+```
+
+
 
 #### .net
 
