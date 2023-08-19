@@ -161,8 +161,6 @@ New-AzResourceGroup -Name $resourceGroupName -Location $location
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\private-apim.bicep -Verbose -mode Incremental
 ```
 
-### 
-
 ### Azure Government API Management to Azure Open AI
 
 Description
