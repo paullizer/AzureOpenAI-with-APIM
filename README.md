@@ -64,13 +64,32 @@ To use the command line deployment method, fork the library and use Codespaces o
 
 ## Architectures
 
-Summary
+The following architectural solutions support two use-cases in the Azure Commercial and Azure Government environments. Determining which solution to implement requires understanding of your current utilization of Azure. 
 
-- 
+- [Azure Commercial API Management to Azure Open AI](#azure-commercial-api-management-to-azure-open-ai)
+  - *Azure Commercial is primary* cloud environment used by the team or organization.
+  - Developing proof of concept or minimum viable production solution.
+  - *Isolated from enterprise networking* using internal networks, Express Routes, and site-2-site VPN connections from the cloud to on-premesis networks.
+
+- [Azure Commercial API Management to Azure Open AI with private endpoints](#azure-commercial-api-management-to-azure-open-ai-with-private-endpoints)
+  - *Azure Commerical is primary* cloud environment used by the team or organization
+  - Pilot or production solution.
+  - *Connected to the enterprise networking* using internal networks, Express Routes, and site-2-site VPN connections from the cloud to on-premesis networks.
+
+- [Azure Government API Management to Azure Open AI](#azure-government-api-management-to-azure-open-ai)
+  - *Azure Government is primary* cloud environment used by the team or organization.
+  - Developing proof of concept or minimum viable production solution.
+  - *Isolated from enterprise networking* using internal networks, Express Routes, and site-2-site VPN connections from the cloud to on-premesis networks.
+
+- [Azure Government API Management to Azure Open AI with private endpoints](#azure-government-api-management-to-azure-open-ai-with-private-endpoints)
+  - *Azure Government is primary* cloud environment used by the team or organization
+  - Pilot or production solution.
+  - *Connected to the enterprise networking* using internal networks, Express Routes, and site-2-site VPN connections from the cloud to on-premesis networks.
+
 
 ### Azure Commercial API Management to Azure Open AI
 
-Description
+Use API management deployed to the Azure Commercial cloud using public IP addresses for accessing APIM and for APIM to access the Azure Open AI API. Access to the services is secured using keys and Defender for Cloud. 
 
 ![Azure Commercial API Management to Azure Open AI](./images/architecture-commercial_apim-to-aoai.png)
 
@@ -119,7 +138,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFil
 
 ### Azure Commercial API Management to Azure Open AI with private endpoints
 
-Description
+Use API management deployed to the Azure Commercial cloud using private IP addresses for accessing APIM and for APIM to access the Azure Open AI API. Access to the services is secured using private network connectivity, keys and Defender for Cloud. Access to the private network is controlled by customer infrastructure and supports internal routing via Express Route or site-2-site VPN for broader enterprise network access like on-premises data centers or site-based users.
 
 ![Azure Commercial API Management to Azure Open AI with private endpoints](./images/architecture-private-commercial_apim-to-aoai.png)
 
@@ -161,9 +180,16 @@ New-AzResourceGroup -Name $resourceGroupName -Location $location
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\private-apim.bicep -Verbose -mode Incremental
 ```
 
+#### Tying it all together
+
+- Now that APIM is deployed and automatically configured to work with your Azure Open AI service
+  - [Click here to learn how do you use the APIM endpoint to interact with Azure Open AI?](#tying-it-all-together)
+
 ### Azure Government API Management to Azure Open AI
 
-Description
+Use API management deployed to the Azure Government cloud using public IP addresses for accessing APIM and for APIM to access the Azure Commercial-based Azure Open AI API. Access to the services is secured using keys and Defender for Cloud. 
+
+Network routing from the APIM to the Azure Open AI address uses Microsoft's backbone, eliminating public routing.
 
 ![Azure Government API Management to Azure Open AI](./images/architecture-government_apim-to-aoai.png)
 
@@ -206,11 +232,18 @@ New-AzResourceGroup -Name $resourceGroupName -Location $location
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\public-apim.bicep -Verbose -mode Incremental
 ```
 
+#### Tying it all together
 
+- Now that APIM is deployed and automatically configured to work with your Azure Open AI service
+  - [Click here to learn how do you use the APIM endpoint to interact with Azure Open AI?](#tying-it-all-together)
 
 ### Azure Government API Management to Azure Open AI with private endpoints
 
-Description
+Use API management deployed to the Azure Government cloud using private IP addresses for accessing APIM and for APIM to access the Azure Commercial-based Azure Open AI API.  
+
+Access to the services is secured using private network connectivity, keys and Defender for Cloud. Access to the private network is controlled by customer infrastructure and supports internal routing via Express Route or site-2-site VPN for broader enterprise network access like on-premises data centers or site-based users.
+
+Network routing from the APIM to the Azure Open AI address uses Microsoft's backbone, eliminating public routing. 
 
 ![Azure Government API Management to Azure Open AI with private endpoints](./images/architecture-private-government_apim-to-aoai.png)
 
@@ -253,13 +286,26 @@ New-AzResourceGroup -Name $resourceGroupName -Location $location
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\private-apim-azure_government.bicep -Verbose -mode Incremental
 ```
 
+#### Tying it all together
+
+- Now that APIM is deployed and automatically configured to work with your Azure Open AI service
+  - [Click here to learn how do you use the APIM endpoint to interact with Azure Open AI?](#tying-it-all-together)
+
 ## Tying it All together
 
-Now you have your APIM deployed and in front of your Azure Open AI API, the following examples will show you how to query and interact.
+Now you have your APIM deployed and managing your Azure Open AI API, the following examples will show you how to query and interact.
 
 ### Get your Azure Open AI Model Name
 
-You will need to select a model
+To determine if you have one or more models deployed, visit the AI Studio. Here you can determine if you need to create a model or use an existing model. You will use the model name when quering the Azure Open AI API via your APIM.
+
+![Get your Azure Open AI Model Name](./images/get-your-aoai-model-name.png)
+
+1. Navigate to your Azure Open AI resource in Azure
+2. Select **Model deployments**
+3. Select **Manage Deployments**
+
+4. Review your models and copy the **Deployment name** of the model you want to use
 
 ### Get your APIM Subscription Key
 
@@ -298,7 +344,7 @@ Modify by including your values, then copy and paste all of it into PowerShell 7
 $apimUrl = 'THE_HTTPS_URL_OF_YOUR_APIM_INSTANCE'
 $modelName = 'GPT-3_5-Turbo' # Probaby what you named your model, but change if necessary
 $apiVersion = '2023-03-15-preview' # Do not change this value, unless you are testing a different API version
-$subscriptionKey = 'YOUR_SUBSCRIPTION_KEY'
+$subscriptionKey = 'YOUR_APIM_SUBSCRIPTION_KEY'
 
 # Do not touch these values
 $url = $apimUrl + "/deployments/" + $modelName + "/chat/completions?api-version=" + $apiVersion
@@ -321,12 +367,16 @@ curl $url -k -H "Content-Type: application/json" -H $key -d '{
 
 ##### Linux
 
+Copy and paste this script into a text editor or Visual Studio code.
+
+Modify by including your values, then copy and paste all of it into bash terminal or create a ".sh" file to run.
+
 ```bash
 #!/bin/bash
 apimUrl="THE_HTTPS_URL_OF_YOUR_APIM_INSTANCE"
 modelName="GPT-3_5-Turbo" # Probaby what you named your model, but change if necessary
 apiVersion="2023-03-15-preview" # Do not change this value, unless you are testing a different API version
-subscriptionKey="YOUR_SUBSCRIPTION_KEY"
+subscriptionKey="YOUR_APIM_SUBSCRIPTION_KEY"
 
 url="${apimUrl}"/deployments/"${modelName}"/chat/completions?api-version="${apiVersion}"
 key="Ocp-Apim-Subscription-Key: ${subscriptionKey}"
@@ -356,12 +406,12 @@ using Azure;
 using Azure.AI.OpenAI;
 
 OpenAIClient client = new OpenAIClient(
-	new Uri("https://INSERT_APIM_URL_HERE/deployments/INSERT_MODELNAME_HERE/chat/completions?api-version=INSERT_API_VERSION_HERE"),
-	new AzureKeyCredential("INSERT_SUBSCRIPTION_KEY_HERE"));
+	new Uri("https://INSERT_APIM_URL_HERE/deployments/INSERT_MODEL_NAME_HERE/chat/completions?api-version=INSERT_API_VERSION_HERE"),
+	new AzureKeyCredential("INSERT_APIM_SUBSCRIPTION_KEY_HERE"));
 
 // ### If streaming is not selected
 Response<ChatCompletions> responseWithoutStream = await client.GetChatCompletionsAsync(
-	"GPT-3_5-Turbo",
+	"INSERT_MODEL_NAME_HERE",
 	new ChatCompletionsOptions()
 	{
 		Messages =
@@ -384,12 +434,12 @@ Console.WriteLine(choice.Message.Content);
 
 ### Get Public IP Address of my Azure Open AI service
 
-Ping or nslookup the fqdn of your Azure Open AI url
+When deploying to Azure Government with Private endpoints, the deployment process requires the public IP address of the Azure Open AI service. Use ping or nslookup with fqdn of your Azure Open AI url to determine it's public IP address.
 
 - example: 
   - url is https://aoai.openai.azure.com
   - fqdn is aoai.openai.azure.com
 
-Then use nslookup in PowerShell along with the fqdn to find out the public IP address of your Azure Open AI service
+Then use nslookup in PowerShell terminal, or Linux console, along with the fqdn to find out the public IP address of your Azure Open AI service.
 
 ![Get Public IP Address of my Azure Open AI service](./images/get-public-address-of-aoai.png)
