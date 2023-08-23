@@ -293,7 +293,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFil
 
 ## Tying it All together
 
-Now you have your APIM deployed and managing your Azure Open AI API, the following examples will show you how to query and interact.
+Read through the following steps to setup interacting with APIM and how to use consoles or .net to programatically interact with Azure Open AI via APIM.
 
 ### Get your Azure Open AI Model Name
 
