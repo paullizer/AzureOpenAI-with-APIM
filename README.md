@@ -131,7 +131,7 @@ New-AzResourceGroup -Name $resourceGroupName -Location $location
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\public-apim.bicep -Verbose -mode Incremental
 ```
 
-#### Tying it all together
+#### Next steps
 
 - Now that APIM is deployed and automatically configured to work with your Azure Open AI service
   - [Click here to learn how do you use the APIM endpoint to interact with Azure Open AI?](#tying-it-all-together)
@@ -180,7 +180,7 @@ New-AzResourceGroup -Name $resourceGroupName -Location $location
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\private-apim.bicep -Verbose -mode Incremental
 ```
 
-#### Tying it all together
+#### Next steps
 
 - Now that APIM is deployed and automatically configured to work with your Azure Open AI service
   - [Click here to learn how do you use the APIM endpoint to interact with Azure Open AI?](#tying-it-all-together)
@@ -232,7 +232,7 @@ New-AzResourceGroup -Name $resourceGroupName -Location $location
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\public-apim.bicep -Verbose -mode Incremental
 ```
 
-#### Tying it all together
+#### Next steps
 
 - Now that APIM is deployed and automatically configured to work with your Azure Open AI service
   - [Click here to learn how do you use the APIM endpoint to interact with Azure Open AI?](#tying-it-all-together)
@@ -286,7 +286,7 @@ New-AzResourceGroup -Name $resourceGroupName -Location $location
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\private-apim-azure_government.bicep -Verbose -mode Incremental
 ```
 
-#### Tying it all together
+#### Next steps
 
 - Now that APIM is deployed and automatically configured to work with your Azure Open AI service
   - [Click here to learn how do you use the APIM endpoint to interact with Azure Open AI?](#tying-it-all-together)
