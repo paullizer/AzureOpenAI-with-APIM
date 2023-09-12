@@ -4,6 +4,13 @@ param location string = resourceGroup().location
 @description('The IP address prefix (CIDR range) to use when deploying the virtual network.')
 param vnetIPPrefix string = '10.0.0.0/16'
 
+@description('The SKU of the API Management instance.')
+@allowed([
+  'Premium'
+  'Developer'
+])
+param apiManagementSku string = 'Premium'
+
 @description('The IP address prefix (CIDR range) to use when deploying the API Management subnet within the virtual network.')
 param apiManagementSubnetIPPrefix string = '10.0.0.0/24'
 
@@ -36,7 +43,6 @@ var enabledForDiskEncryption = false
 var enabledForTemplateDeployment = false
 
 var apiManagementSkuCount = 1
-var apiManagementSku = 'Developer'
 var apiManagementNamedValueName = 'aoai-api-key'
 
 var apiName = 'azure-openai-service-api'

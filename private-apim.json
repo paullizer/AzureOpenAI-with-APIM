@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.20.4.51522",
-      "templateHash": "12779710611274232309"
+      "templateHash": "11312441299852198890"
     }
   },
   "parameters": {
@@ -21,6 +21,17 @@
       "defaultValue": "10.0.0.0/16",
       "metadata": {
         "description": "The IP address prefix (CIDR range) to use when deploying the virtual network."
+      }
+    },
+    "apiManagementSku": {
+      "type": "string",
+      "defaultValue": "Premium",
+      "allowedValues": [
+        "Premium",
+        "Developer"
+      ],
+      "metadata": {
+        "description": "The SKU of the API Management instance."
       }
     },
     "apiManagementSubnetIPPrefix": {
@@ -44,7 +55,7 @@
         "description": "The email address of the API publisher. This information is used by API Management."
       }
     },
-    "openaiKey": {
+    "azureOpenAiKey": {
       "type": "securestring",
       "metadata": {
         "description": "Provide Key 1 for the Azure Open AI service."
@@ -75,7 +86,6 @@
     "enabledForDiskEncryption": false,
     "enabledForTemplateDeployment": false,
     "apiManagementSkuCount": 1,
-    "apiManagementSku": "Developer",
     "apiManagementNamedValueName": "aoai-api-key",
     "apiName": "azure-openai-service-api",
     "apiPath": "",
@@ -94,7 +104,7 @@
       "name": "[format('{0}/{1}', variables('apiManagementServiceName'), variables('apiManagementNamedValueName'))]",
       "properties": {
         "displayName": "[variables('apiManagementNamedValueName')]",
-        "value": "[parameters('openaiKey')]",
+        "value": "[parameters('azureOpenAiKey')]",
         "secret": true
       },
       "dependsOn": [
@@ -544,7 +554,7 @@
             "value": "[parameters('apiManagementPublisherEmail')]"
           },
           "skuName": {
-            "value": "[variables('apiManagementSku')]"
+            "value": "[parameters('apiManagementSku')]"
           },
           "skuCount": {
             "value": "[variables('apiManagementSkuCount')]"
@@ -705,7 +715,7 @@
             "value": "[variables('secretName')]"
           },
           "secretValue": {
-            "value": "[parameters('openaiKey')]"
+            "value": "[parameters('azureOpenAiKey')]"
           }
         },
         "template": {

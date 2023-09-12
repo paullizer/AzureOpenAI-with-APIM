@@ -1,6 +1,13 @@
 @description('The location into which regionally scoped resources should be deployed. Note that Front Door is a global resource.')
 param location string = resourceGroup().location
 
+@description('The SKU of the API Management instance.')
+@allowed([
+  'Premium'
+  'Developer'
+])
+param apiManagementSku string = 'Premium'
+
 @description('The name of the API publisher. This information is used by API Management.')
 param apiManagementPublisherName string = 'Contoso'
 
@@ -28,7 +35,6 @@ var enabledForDiskEncryption = false
 var enabledForTemplateDeployment = false
 
 var apiManagementSkuCount = 1
-var apiManagementSku = 'Developer'
 var apiManagementNamedValueName = 'aoai-api-key'
 
 var apiName = 'azure-openai-service-api'

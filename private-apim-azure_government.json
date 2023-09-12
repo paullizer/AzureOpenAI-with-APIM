@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.20.4.51522",
-      "templateHash": "735207236615971573"
+      "templateHash": "12423453013284713292"
     }
   },
   "parameters": {
@@ -21,6 +21,17 @@
       "defaultValue": "10.0.0.0/16",
       "metadata": {
         "description": "The IP address prefix (CIDR range) to use when deploying the virtual network."
+      }
+    },
+    "apiManagementSku": {
+      "type": "string",
+      "defaultValue": "Premium",
+      "allowedValues": [
+        "Premium",
+        "Developer"
+      ],
+      "metadata": {
+        "description": "The SKU of the API Management instance."
       }
     },
     "apiManagementSubnetIPPrefix": {
@@ -82,7 +93,6 @@
     "enabledForDiskEncryption": false,
     "enabledForTemplateDeployment": false,
     "apiManagementSkuCount": 1,
-    "apiManagementSku": "Developer",
     "apiManagementNamedValueName": "aoai-api-key",
     "apiName": "azure-openai-service-api",
     "apiPath": "",
@@ -553,7 +563,7 @@
             "value": "[parameters('apiManagementPublisherEmail')]"
           },
           "skuName": {
-            "value": "[variables('apiManagementSku')]"
+            "value": "[parameters('apiManagementSku')]"
           },
           "skuCount": {
             "value": "[variables('apiManagementSkuCount')]"

@@ -255,7 +255,7 @@ Network routing from the APIM to the Azure Open AI address uses Microsoft's back
 
 Simple one-button deployment, opens in Azure Portal
 
-[![Deploy to Azure Government](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-with-APIM%2Fmain%2Fprivate-apim-azure_government.json)
+[![Deploy to Azure Government](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpaullizer%2FAzureOpenAI-with-APIM%2Fmain%2Fprivate-apim-azure_government.json)
 
 ##### Azure CLI
 
