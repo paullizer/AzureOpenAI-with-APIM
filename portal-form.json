@@ -14,10 +14,10 @@
               "name": "basicsDescriptionTextBlock",
               "type": "Microsoft.Common.TextBlock",
               "options": {
-                "text": "US Federal focused version of Azure Open AI chat with customer data. Provides infrastructure deployment and web application. All services are deployed using Private Endpoints to meet organizational security and compliance requirements. For additional information, submit feature requests, or review the architecture, use the following GovChat url.",
+                "text": "Deploy APIM. Auto-configure it to work with your Azure Open AI.",
                 "link": {
-                  "label": "https://github.com/microsoft/GovChat",
-                  "uri": "https://github.com/microsoft/GovChat"
+                  "label": "https://github.com/microsoft/AzureOpenAI-with-APIM",
+                  "uri": "https://github.com/microsoft/AzureOpenAI-with-APIM"
                 }
               }
             },
@@ -53,7 +53,7 @@
                   "name": "requirementsOpenAi",
                   "type": "Microsoft.Common.TextBlock",
                   "options": {
-                    "text": "GovChat requires a pre-existing Azure Open AI service in an Azure Commercial subscription. Use the following information to gain access and deploy to Azure Open AI."
+                    "text": "APIM with AOAI requires Azure Open AI service in an Azure Commercial subscription. Use the following information to gain access and deploy to Azure Open AI."
                   }
                 },
                 {
