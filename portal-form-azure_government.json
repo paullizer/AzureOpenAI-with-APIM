@@ -3,7 +3,7 @@
   "view": {
     "kind": "Form",
     "properties": {
-      "title": "APIM with AOAI",
+      "title": "GovChat",
       "isWizard": true,
       "steps": [
         {
@@ -50,6 +50,13 @@
               "type": "Microsoft.Common.Section",
               "elements": [
                 {
+                  "name": "requirementsOpenAi",
+                  "type": "Microsoft.Common.TextBlock",
+                  "options": {
+                    "text": "APIM with AOAI requires Azure Open AI service in an Azure Commercial subscription.."
+                  }
+                },
+                {
                   "name": "requirementsOpenAiAccess",
                   "type": "Microsoft.Common.TextBlock",
                   "options": {
@@ -57,6 +64,17 @@
                     "link": {
                       "label": "https://aka.ms/oai/access",
                       "uri": "https://aka.ms/oai/access"
+                    }
+                  }
+                },
+                {
+                  "name": "requirementsOpenAiDeployed",
+                  "type": "Microsoft.Common.TextBlock",
+                  "options": {
+                    "text": "Use the following guide, to deploy Azure Open AI.",
+                    "link": {
+                      "label": "https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource",
+                      "uri": "https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource"
                     }
                   }
                 }
@@ -71,21 +89,51 @@
                   "name": "subscriptionDetailsText",
                   "type": "Microsoft.Common.TextBlock",
                   "options": {
-                    "text": "APIM with AOAI is configured for deployment into a single subscription."
+                    "text": "GovChat is configured for deployment into a single subscription or multiple subscriptions depending on your needs for resource counts, subscription boundaries, or billing."
+                  }
+                }
+              ]
+            },
+            {
+              "name": "appSection",
+              "label": "GovChat Application and Database",
+              "type": "Microsoft.Common.Section",
+              "elements": [
+                {
+                  "name": "appSectionTextBlock",
+                  "type": "Microsoft.Common.TextBlock",
+                  "options": {
+                    "text": "Virtual network, App service, Cosmos database, Storage account, Key Vault, and Application Insights resources for the GovChat application."
+                  }
+                },
+                {
+                  "name": "appSubscriptionId",
+                  "label": "GovChat App Subscription",
+                  "type": "Microsoft.Common.DropDown",
+                  "defaultValue": "",
+                  "toolTip": "Select the Subscription for your GovChat Virtual network, App service, Cosmos database, Storage account, Key Vault, and App Insights.",
+                  "multiselect": false,
+                  "selectAll": false,
+                  "filter": true,
+                  "filterPlaceholder": "Filter items ...",
+                  "multiLine": true,
+                  "constraints": {
+                    "allowedValues": "[map(steps('basics').armApiControls.subscriptionApi.value, (item) => parse(concat('{\"label\":\"', item.displayName, '\",\"value\":\"', item.id, '\",\"description\":\"', 'ID: ', item.subscriptionId, '\"}')))]",
+                    "required": true
                   }
                 }
               ]
             },
             {
               "name": "sharedServicesSection",
-              "label": "APIM with AOAI Services",
+              "label": "Shared Services",
               "type": "Microsoft.Common.Section",
               "elements": [
                 {
                   "name": "sharedServicesSectionTextBlock",
                   "type": "Microsoft.Common.TextBlock",
                   "options": {
-                    "text": "APIM with AOAI services subscription is used to deploy all services."
+                    "text": "The Shared Services spoke is used to host services that are used by multiple workloads like API management, Azure Open AI, and Cognitive search."
                   }
                 },
                 {
@@ -93,7 +141,7 @@
                   "label": "Shared Services Subscription",
                   "type": "Microsoft.Common.DropDown",
                   "defaultValue": "",
-                  "toolTip": "Select the Subscription for your APIM with AOAI services.",
+                  "toolTip": "Select the Subscription for your GovChat Shared Services.",
                   "multiselect": false,
                   "selectAll": false,
                   "filter": true,
@@ -116,7 +164,7 @@
                   "label": "Location",
                   "type": "Microsoft.Common.DropDown",
                   "defaultValue": "",
-                  "toolTip": "Select the Location for APIM with AOAI.",
+                  "toolTip": "Select the Location for GovChat.",
                   "multiselect": false,
                   "selectAll": false,
                   "filter": true,
@@ -131,7 +179,7 @@
             },
             {
               "name": "namingSection",
-              "label": "APIM with AOAI Name",
+              "label": "GovChat Name",
               "type": "Microsoft.Common.Section",
               "elements": [
                 {
@@ -194,25 +242,25 @@
               "name": "networkDescriptionTextBlock",
               "type": "Microsoft.Common.TextBlock",
               "options": {
-                "text": "APIM with AOAI deploys virtual networks."
+                "text": "GovChat deploys virtual networks."
               }
             },
             {
               "name": "infoBoxVirtualNetworkOverlap",
               "type": "Microsoft.Common.InfoBox",
               "options": {
-                "text": "Make sure that the address spaces do not overlap with other organizational IP addressing spaces.",
+                "text": "Make sure that the address spaces do not overlap with each other for the GovChat application or Shared Services networks.",
                 "style": "Info"
               }
             },
             {
               "name": "appVirtualNetwork",
-              "label": "APIM with AOAI Virtual Network",
+              "label": "GovChat Application Virtual Network",
               "type": "Microsoft.Common.Section",
               "elements": [
                 {
                   "name": "virtualNetworkAddressCidrRange",
-                  "label": "APIM with AOAI Virtual Network CIDR Range",
+                  "label": "GovChat Application Virtual Network CIDR Range",
                   "type": "Microsoft.Common.TextBox",
                   "defaultValue": "10.0.100.0/24",
                   "toolTip": "Specify an address CIDR range within the range [10,24].",
@@ -228,7 +276,7 @@
                 },
                 {
                   "name": "subnetAddressCidrRange",
-                  "label": "APIM with AOAI Subnet CIDR Range",
+                  "label": "GovChat Subnet CIDR Range",
                   "type": "Microsoft.Common.TextBox",
                   "defaultValue": "10.0.100.128/27",
                   "toolTip": "Specify a CIDR range for the default subnet within the App Virtual Network range [24,28].",
@@ -259,6 +307,61 @@
                   }
                 }
               ]
+            },
+            {
+              "name": "sharedServicesVirtualNetwork",
+              "label": "Shared Services Virtual Network",
+              "type": "Microsoft.Common.Section",
+              "elements": [
+                {
+                  "name": "virtualNetworkAddressCidrRange",
+                  "label": "Shared Services Virtual Network CIDR Range",
+                  "type": "Microsoft.Common.TextBox",
+                  "defaultValue": "10.0.120.0/26",
+                  "toolTip": "Specify an address CIDR range within the range [10,26].",
+                  "constraints": {
+                    "required": true,
+                    "validations": [
+                      {
+                        "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-6]))$",
+                        "message": "Invalid CIDR range. The address prefix must be in the range [10,26]."
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "subnetAddressCidrRange",
+                  "label": "Shared Services Subnet CIDR Range",
+                  "type": "Microsoft.Common.TextBox",
+                  "defaultValue": "10.0.120.0/27",
+                  "toolTip": "Specify a CIDR range for the default subnet within the Shared Services Virtual Network range [26,28].",
+                  "constraints": {
+                    "required": true,
+                    "validations": [
+                      {
+                        "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[6-8]))$",
+                        "message": "Invalid CIDR range. The address prefix must be in the range [26,28]."
+                      },
+                      {
+                        "isValid": "[if(greaterOrEquals(last(split(steps('networking').sharedServicesVirtualNetwork.virtualNetworkAddressCidrRange, '/')), 8), equals(last(take(split(first(split(steps('networking').sharedServicesVirtualNetwork.virtualNetworkAddressCidrRange, '/')), '.'), 1)), last(take(split(first(split(steps('networking').sharedServicesVirtualNetwork.subnetAddressCidrRange, '/')), '.'), 1))), true)]",
+                        "message": "CIDR range not within virtual network CIDR range (first octet)."
+                      },
+                      {
+                        "isValid": "[if(greaterOrEquals(last(split(steps('networking').sharedServicesVirtualNetwork.virtualNetworkAddressCidrRange, '/')), 16), equals(last(take(split(first(split(steps('networking').sharedServicesVirtualNetwork.virtualNetworkAddressCidrRange, '/')), '.'), 2)), last(take(split(first(split(steps('networking').sharedServicesVirtualNetwork.subnetAddressCidrRange, '/')), '.'), 2))), true)]",
+                        "message": "CIDR range not within virtual network CIDR range (second octet)."
+                      },
+                      {
+                        "isValid": "[if(greaterOrEquals(last(split(steps('networking').sharedServicesVirtualNetwork.virtualNetworkAddressCidrRange, '/')), 24), equals(last(take(split(first(split(steps('networking').sharedServicesVirtualNetwork.virtualNetworkAddressCidrRange, '/')), '.'), 3)), last(take(split(first(split(steps('networking').sharedServicesVirtualNetwork.subnetAddressCidrRange, '/')), '.'), 3))), true)]",
+                        "message": "CIDR range not within virtual network CIDR range (third octet)."
+                      },
+                      {
+                        "isValid": "[lessOrEquals(last(split(steps('networking').sharedServicesVirtualNetwork.virtualNetworkAddressCidrRange, '/')), last(split(steps('networking').sharedServicesVirtualNetwork.subnetAddressCidrRange, '/')))]",
+                        "message": "CIDR range not within virtual network CIDR range (subnet mask)."
+                      }
+                    ]
+                  }
+                }
+              ]
             }
           ]
         },
@@ -270,10 +373,10 @@
               "name": "azureOpenAiStepTextBlock",
               "type": "Microsoft.Common.TextBlock",
               "options": {
-                "text": "Deploy Azure Open AI service.",
+                "text": "Provide the configuration details for the Azure Open AI service to be used with GovChat.",
                 "link": {
-                  "label": "https://github.com/microsoft/APIM with AOAI",
-                  "uri": "https://github.com/microsoft/APIM with AOAI"
+                  "label": "https://github.com/microsoft/GovChat",
+                  "uri": "https://github.com/microsoft/GovChat"
                 }
               }
             },
@@ -286,7 +389,7 @@
                   "name": "azureOpenAiFqdnTextBlock",
                   "type": "Microsoft.Common.TextBlock",
                   "options": {
-                    "text": "Provide the URL of the Azure Open AI service to be used with APIM with AOAI."
+                    "text": "Provide the URL of the Azure Open AI service to be used with GovChat."
                   }
                 },
                 {
@@ -294,7 +397,7 @@
                   "label": "Azure Open AI URL",
                   "type": "Microsoft.Common.TextBox",
                   "defaultValue": "https://InsertYourAzureOpenAiNameHere.openai.azure.com/openai",
-                  "toolTip": "Provide URL for the Azure Open AI service to be used with APIM with AOAI.",
+                  "toolTip": "Provide URL for the Azure Open AI service to be used with GovChat.",
                   "multiselect": false,
                   "selectAll": false,
                   "filter": false,
@@ -313,7 +416,7 @@
                   "name": "azureOpenAiIpAddressTextBlock",
                   "type": "Microsoft.Common.TextBlock",
                   "options": {
-                    "text": "Provide the URL of the Azure Open AI service to be used with APIM with AOAI.",
+                    "text": "Provide the URL of the Azure Open AI service to be used with GovChat.",
                     "link": {
                       "label": "View steps in collecting Azure Open AI public IP address.",
                       "uri": "https://github.com/microsoft/AzureOpenAI-with-APIM#get-public-ip-address-of-my-azure-open-ai-service"
@@ -325,7 +428,7 @@
                   "label": "Azure Open AI IP Address",
                   "type": "Microsoft.Common.TextBox",
                   "defaultValue": "000.000.000.000",
-                  "toolTip": "Provide IP address for the Azure Open AI service to be used with APIM with AOAI.",
+                  "toolTip": "Provide IP address for the Azure Open AI service to be used with GovChat.",
                   "multiselect": false,
                   "selectAll": false,
                   "filter": false,
@@ -384,7 +487,7 @@
               "name": "azureApiManagementStepTextBlock",
               "type": "Microsoft.Common.TextBlock",
               "options": {
-                "text": "Provide the configuration details for the Azure API Management service to be used with APIM with AOAI."
+                "text": "Provide the configuration details for the Azure API Management service to be used with GovChat."
               }
             },
             {
@@ -429,7 +532,7 @@
                   "name": "apimPublisherNameTextBlock",
                   "type": "Microsoft.Common.TextBlock",
                   "options": {
-                    "text": "Provide the Publisher name for APIM to be used with APIM with AOAI."
+                    "text": "Provide the Publisher name for APIM to be used with GovChat."
                   }
                 },
                 {
@@ -450,7 +553,7 @@
                   "name": "apimPublisherEmailTextBlock",
                   "type": "Microsoft.Common.TextBlock",
                   "options": {
-                    "text": "Provide the Publisher email for APIM to be used with APIM with AOAI."
+                    "text": "Provide the Publisher email for APIM to be used with GovChat."
                   }
                 },
                 {
@@ -485,7 +588,7 @@
               "name": "complianceDescriptionTextBlock",
               "type": "Microsoft.Common.TextBlock",
               "options": {
-                "text": "APIM with AOAI comes bundled with the ability to enable Microsoft Defender for Cloud and Azure Sentinel for the subscriptions it is deployed into."
+                "text": "GovChat comes bundled with the ability to enable Microsoft Defender for Cloud and Azure Sentinel for the subscriptions it is deployed into."
               }
             },
             {
@@ -497,7 +600,7 @@
                   "name": "defenderSubscriptionDetailsText",
                   "type": "Microsoft.Common.TextBlock",
                   "options": {
-                    "text": "APIM with AOAI can activate Microsoft Defender for Cloud for each subscription it is deployed into.",
+                    "text": "GovChat can activate Microsoft Defender for Cloud for each subscription it is deployed into.",
                     "link": {
                       "label": "Learn more",
                       "uri": "https://docs.microsoft.com/en-us/azure/defender-for-cloud/defender-for-cloud-introduction"
@@ -515,7 +618,7 @@
                   "name": "deployDefender",
                   "type": "Microsoft.Common.CheckBox",
                   "label": "Enable Microsoft Defender for Cloud?",
-                  "toolTip": "Check here to enable Microsoft Defender for Cloud for the subscriptions used to deploy APIM with AOAI.",
+                  "toolTip": "Check here to enable Microsoft Defender for Cloud for the subscriptions used to deploy GovChat.",
                   "constraints": {
                     "required": false
                   }
@@ -550,7 +653,7 @@
                   "name": "sentinelSectionDetailsText",
                   "type": "Microsoft.Common.TextBlock",
                   "options": {
-                    "text": "APIM with AOAI can activate Azure Sentinel for the Log Analytics Workspace it deploys.",
+                    "text": "GovChat can activate Azure Sentinel for the Log Analytics Workspace it deploys.",
                     "link": {
                       "label": "Learn more",
                       "uri": "https://learn.microsoft.com/en-us/azure/sentinel/overview"
@@ -568,7 +671,7 @@
                   "name": "deploySentinel",
                   "type": "Microsoft.Common.CheckBox",
                   "label": "Enable Azure Sentinel?",
-                  "toolTip": "Check here to enable Azure Sentinel Center for the Log Analytics Workspace APIM with AOAI deploys.",
+                  "toolTip": "Check here to enable Azure Sentinel Center for the Log Analytics Workspace GovChat deploys.",
                   "constraints": {
                     "required": false
                   }
@@ -585,16 +688,16 @@
               "name": "listOfServicesDeployedSectionDescriptionTextBlock",
               "type": "Microsoft.Common.TextBlock",
               "options": {
-                "text": "APIM with AOAI will deploy the following Azure services.",
+                "text": "GovChat will deploy the following Azure services.",
                 "link": {
                   "label": "Learn more",
-                  "uri": "https://github.com/microsoft/APIM with AOAI"
+                  "uri": "https://github.com/microsoft/GovChat"
                 }
               }
             },
             {
               "name": "listOfServicesDeployed",
-              "label": "All services deployed with APIM with AOAI",
+              "label": "All services deployed with GovChat",
               "type": "Microsoft.Common.Section",
               "elements": [
                 {
