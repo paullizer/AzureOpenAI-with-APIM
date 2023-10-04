@@ -672,7 +672,7 @@
         "apiManagementSku": "[steps('azureApiManagementStep').azureApiManagementDetails.apimSku]",
         "apiManagementPublisherName": "[steps('azureApiManagementStep').azureApiManagementDetails.apimPublisherName]",
         "apiManagementPublisherEmail": "[steps('azureApiManagementStep').azureApiManagementDetails.apimPublisherEmail]",
-        "azureOpenAiModelName": "[steps('azureOpenAiStep').azureOpenAiDetails.azureOpenAiModelName]",
+        "azureOpenAiModelName": "[steps('azureOpenAiStep').azureOpenAiDetails.azureOpenAiModelName]"
       }
     }
   }
