@@ -7,7 +7,7 @@
       "isWizard": true,
       "steps": [
         {
-          "name": "basics",
+          "name": "basicsStep",
           "label": "Basics",
           "elements": [
             {
@@ -77,20 +77,20 @@
               ]
             },
             {
-              "name": "sharedServicesSection",
+              "name": "subscriptiopnSection",
               "label": "APIM with AOAI Services",
               "type": "Microsoft.Common.Section",
               "elements": [
                 {
-                  "name": "sharedServicesSectionTextBlock",
+                  "name": "subscriptiopnSectionTextBlock",
                   "type": "Microsoft.Common.TextBlock",
                   "options": {
                     "text": "APIM with AOAI services subscription is used to deploy all services."
                   }
                 },
                 {
-                  "name": "sharedServicesSubscriptionId",
-                  "label": "Shared Services Subscription",
+                  "name": "subscriptiopnSectionId",
+                  "label": "Subscription",
                   "type": "Microsoft.Common.DropDown",
                   "defaultValue": "",
                   "toolTip": "Select the Subscription for your APIM with AOAI services.",
@@ -187,7 +187,7 @@
           ]
         },
         {
-          "name": "networking",
+          "name": "networkingStep",
           "label": "Networking",
           "elements": [
             {
@@ -206,7 +206,7 @@
               }
             },
             {
-              "name": "appVirtualNetwork",
+              "name": "virtualNetwork",
               "label": "APIM with AOAI Virtual Network",
               "type": "Microsoft.Common.Section",
               "elements": [
@@ -305,69 +305,6 @@
                       {
                         "regex": "^https:\/\/[a-zA-Z0-9.-]+.azure.com\/openai$",
                         "message": "Provide a valid Azure Open AI FQDN, must include https:// and end with openai.azure.com/openai"
-                      }
-                    ]
-                  }
-                },
-                {
-                  "name": "azureOpenAiIpAddressTextBlock",
-                  "type": "Microsoft.Common.TextBlock",
-                  "options": {
-                    "text": "Provide the URL of the Azure Open AI service to be used with APIM with AOAI.",
-                    "link": {
-                      "label": "View steps in collecting Azure Open AI public IP address.",
-                      "uri": "https://github.com/microsoft/AzureOpenAI-with-APIM#get-public-ip-address-of-my-azure-open-ai-service"
-                    }
-                  }
-                },
-                {
-                  "name": "azureOpenAiIpAddress",
-                  "label": "Azure Open AI IP Address",
-                  "type": "Microsoft.Common.TextBox",
-                  "defaultValue": "000.000.000.000",
-                  "toolTip": "Provide IP address for the Azure Open AI service to be used with APIM with AOAI.",
-                  "multiselect": false,
-                  "selectAll": false,
-                  "filter": false,
-                  "multiLine": false,
-                  "constraints": {
-                    "required": true,
-                    "validations": [
-                      {
-                        "regex": "^(?:[0-9]{1,3}.){3}[0-9]{1,3}$",
-                        "message": "Provide a valid IP address"
-                      }
-                    ]
-                  }
-                },
-                {
-                  "name": "azureOpenAiKeyTextBlock",
-                  "type": "Microsoft.Common.TextBlock",
-                  "options": {
-                    "text": "Provide the Key of the Azure Open AI service. This is used by API Management.",
-                    "link": {
-                      "label": "View steps in collecting Azure Open AI Key.",
-                      "uri": "https://learn.microsoft.com/en-us/azure/ai-services/openai/quickstart?tabs=command-line&pivots=rest-api#retrieve-key-and-endpoint"
-                    }
-                  }
-                },
-                {
-                  "name": "azureOpenAiKey",
-                  "label": "Azure Open AI Key",
-                  "type": "Microsoft.Common.TextBox",
-                  "defaultValue": "",
-                  "toolTip": "Provide Key for the Azure Open AI service.",
-                  "multiselect": false,
-                  "selectAll": false,
-                  "filter": false,
-                  "multiLine": false,
-                  "secure": true,
-                  "constraints": {
-                    "required": true,
-                    "validations": [
-                      {
-                        "regex": "^[a-fA-F0-9]{32}$",
-                        "message": "Provide a 32 character hexidecimal key."
                       }
                     ]
                   }
@@ -478,7 +415,7 @@
           ]
         },
         {
-          "name": "compliance",
+          "name": "complianceStep",
           "label": "Compliance",
           "elements": [
             {
@@ -695,7 +632,7 @@
           ]
         },
         {
-          "name": "tags",
+          "name": "tagsStep",
           "label": "Tags",
           "subLabel": {
             "preValidation": "Provide tags that will be used for all resources.",
@@ -719,28 +656,23 @@
     },
     "outputs": {
       "kind": "Subscription",
-      "location": "[steps('basics').locationSection.location]",
-      "subscriptionId": "[steps('basics').appSection.appSubscriptionId]",
+      "location": "[steps('basicsStep').locationSection.location]",
+      "subscriptionId": "[steps('basicsStep').subscriptiopnSection.appSubscriptionId]",
       "parameters": {
-        "resourcePrefix": "[steps('basics').namingSection.resourcePrefix]",
-        "resourceSuffix": "[steps('basics').namingSection.resourceSuffix]",
-        "appSubscriptionId": "[replace(steps('basics').appSection.appSubscriptionId, '/subscriptions/', '')]",
-        "sharedServicesSubscriptionId": "[replace(steps('basics').sharedServicesSection.sharedServicesSubscriptionId, '/subscriptions/', '')]",
-        "location": "[steps('basics').locationSection.location]",
-        "tags": "[if(not(contains(steps('tags').tagsByResource, 'MissionLandingZone')), parse('{}'), first(map(parse(concat('[', string(steps('tags').tagsByResource), ']')), (item) => item.MissionLandingZone)))]",
-        "appVirtualNetworkAddressPrefix": "[steps('networking').appVirtualNetwork.virtualNetworkAddressCidrRange]",
-        "appSubnetAddressPrefix": "[steps('networking').appVirtualNetwork.subnetAddressCidrRange]",
-        "sharedServicesVirtualNetworkAddressPrefix": "[steps('networking').sharedServicesVirtualNetwork.virtualNetworkAddressCidrRange]",
-        "sharedServicesSubnetAddressPrefix": "[steps('networking').sharedServicesVirtualNetwork.subnetAddressCidrRange]",
-        "deploySentinel": "[steps('compliance').sentinelSection.deploySentinel]",
-        "deployDefender": "[steps('compliance').defenderSection.deployDefender]",
-        "emailSecurityContact": "[steps('compliance').defenderSection.emailSecurityContact]",
+        "resourcePrefix": "[steps('basicsStep').namingSection.resourcePrefix]",
+        "resourceSuffix": "[steps('basicsStep').namingSection.resourceSuffix]",
+        "sharedServicesSubscriptionId": "[replace(steps('basicsStep').subscriptiopnSection.sharedServicesSubscriptionId, '/subscriptions/', '')]",
+        "location": "[steps('basicsStep').locationSection.location]",
+        "tags": "[if(not(contains(steps('tagsStep').tagsByResource, 'MissionLandingZone')), parse('{}'), first(map(parse(concat('[', string(steps('tagsStep').tagsByResource), ']')), (item) => item.MissionLandingZone)))]",
+        "virtualNetworkAddressPrefix": "[steps('networkingStep').virtualNetwork.virtualNetworkAddressCidrRange]",
+        "subnetAddressPrefix": "[steps('networkingStep').virtualNetwork.subnetAddressCidrRange]",
+        "deploySentinel": "[steps('complianceStep').sentinelSection.deploySentinel]",
+        "deployDefender": "[steps('complianceStep').defenderSection.deployDefender]",
+        "emailSecurityContact": "[steps('complianceStep').defenderSection.emailSecurityContact]",
         "apiManagementSku": "[steps('azureApiManagementStep').azureApiManagementDetails.apimSku]",
         "apiManagementPublisherName": "[steps('azureApiManagementStep').azureApiManagementDetails.apimPublisherName]",
         "apiManagementPublisherEmail": "[steps('azureApiManagementStep').azureApiManagementDetails.apimPublisherEmail]",
-        "azureOpenAiKey": "[steps('azureOpenAiStep').azureOpenAiDetails.azureOpenAiKey]",
-        "azureOpenAiFqdn": "[steps('azureOpenAiStep').azureOpenAiDetails.azureOpenAiFqdn]",
-        "azureOpenAiPublicIpAddress": "[steps('azureOpenAiStep').azureOpenAiDetails.azureOpenAiIpAddress]"
+        "azureOpenAiModelName": "[steps('azureOpenAiStep').azureOpenAiDetails.azureOpenAiModelName]",
       }
     }
   }
